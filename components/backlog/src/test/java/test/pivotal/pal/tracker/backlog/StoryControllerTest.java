@@ -85,7 +85,7 @@ public class StoryControllerTest {
         doReturn(records).when(storyDataGateway).findAllByProjectId(anyLong());
 
 
-        List<StoryInfo> result = storyController.list(13);
+        List<StoryInfo> result = storyController.list(new Long(13));
 
 
         verify(storyDataGateway).findAllByProjectId(13L);
