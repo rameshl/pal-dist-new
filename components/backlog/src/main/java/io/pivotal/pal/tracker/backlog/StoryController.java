@@ -36,11 +36,26 @@ public class StoryController {
     }
 
     @GetMapping
-    public List<StoryInfo> list(@RequestParam long projectId) {
-        return gateway.findAllByProjectId(projectId).stream()
-            .map(this::present)
-            .collect(toList());
+    public List<StoryInfo> list(@RequestParam(required = false) Long projectId) {
+        List<StoryInfo> stories;
+        if(projectId == null){
+            stories = gateway.findAll().stream()
+                    .map(this::present)
+                    .collect(toList());
+        } else {
+            stories = gateway.findAllByProjectId(projectId).stream()
+                    .map(this::present)
+                    .collect(toList());
+        }
+        return stories;
     }
+
+    /*@GetMapping
+    public List<StoryInfo> list() {
+        return gateway.findAll().stream()
+                .map(this::present)
+                .collect(toList());
+    }*/
 
 
     private boolean projectIsActive(long projectId) {

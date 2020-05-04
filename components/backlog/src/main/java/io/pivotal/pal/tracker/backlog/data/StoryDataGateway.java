@@ -44,6 +44,13 @@ public class StoryDataGateway {
         );
     }
 
+    public List<StoryRecord> findAll() {
+        return jdbcTemplate.query(
+                "select id, project_id, name from stories",
+                rowMapper
+        );
+    }
+
 
     private StoryRecord find(long id) {
         return jdbcTemplate.queryForObject(
