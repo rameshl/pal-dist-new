@@ -6,7 +6,6 @@ dependencyManagement {
         mavenBom "io.pivotal.spring.cloud:spring-cloud-services-dependencies:$springCloudServicesClientLibrariesVersion"
     }
 }
-
 dependencies {
     compile project(":components:rest-support")
 
