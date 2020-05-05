@@ -81,7 +81,7 @@ public class AllocationControllerTest {
         doReturn(records).when(allocationDataGateway).findAllByProjectId(anyLong());
 
 
-        List<AllocationInfo> result = allocationsController.list(13);
+        List<AllocationInfo> result = allocationsController.list(new Long(13));
 
 
         verify(allocationDataGateway).findAllByProjectId(13L);
