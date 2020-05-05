@@ -48,6 +48,13 @@ public class AllocationDataGateway {
         );
     }
 
+    public List<AllocationRecord> findAll() {
+        return jdbcTemplate.query(
+                "select id, project_id, user_id, first_day, last_day from allocations order by first_day",
+                rowMapper
+        );
+    }
+
 
     private AllocationRecord find(long id) {
         return jdbcTemplate.queryForObject(

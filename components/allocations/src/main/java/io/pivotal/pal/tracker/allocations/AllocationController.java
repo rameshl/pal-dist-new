@@ -29,7 +29,7 @@ public class AllocationController {
 
     @PostMapping
     public ResponseEntity<AllocationInfo> create(@RequestBody AllocationForm form) {
-
+        System.out.println("Project id: "+form.projectId);
         if (projectIsActive(form.projectId)) {
             AllocationRecord record = gateway.create(formToFields(form));
             return new ResponseEntity<>(present(record), HttpStatus.CREATED);
@@ -38,18 +38,33 @@ public class AllocationController {
         return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
     }
 
-    @GetMapping
+    /*@GetMapping
     public List<AllocationInfo> list(@RequestParam long projectId) {
         return gateway.findAllByProjectId(projectId)
             .stream()
             .map(this::present)
             .collect(toList());
+    }*/
+
+    @GetMapping
+    public List<AllocationInfo> list(@RequestParam(required = false) Long projectId) {
+        List<AllocationInfo> allocations;
+        if(projectId == null){
+            allocations = gateway.findAll().stream()
+                    .map(this::present)
+                    .collect(toList());
+        } else {
+            allocations = gateway.findAllByProjectId(projectId).stream()
+                    .map(this::present)
+                    .collect(toList());
+        }
+        return allocations;
     }
 
 
     private boolean projectIsActive(long projectId) {
         ProjectInfo project = client.getProject(projectId);
-
+        System.out.println("Client found project: "+project);
         return project != null && project.active;
     }
 
